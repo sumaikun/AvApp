@@ -5,7 +5,21 @@ package core.Actions;
  */
 
  abstract class Actions {
-    protected String description;
-    private String[] commands;
+    public String description;
+    public String[] commands;
 
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public String getDescription(String description)
+    {
+        return this.description ;
+    }
+    /*protected Actions(String description,String[] commands)
+    {
+        this.description = description;
+        this.commands = commands;
+    }*/
 }

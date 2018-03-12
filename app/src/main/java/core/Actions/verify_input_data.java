@@ -2,24 +2,51 @@ package core.Actions;
 
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
+import core.Objects.ruled_EditText;
+
 /**
  * Created by Jesus on 05/03/2018.
  */
 
 public class verify_input_data extends Actions {
 
-    private void _construct()
-    {
-        description = "Verificar datos de entradas de texto";
+    private ArrayList<ruled_EditText> ruled_editText;
+    private String current_description = "Verificar datos de entrada";
+
+
+    public verify_input_data(ArrayList<ruled_EditText> ruled_editText) {
+        setDescription(this.current_description);
+        this.ruled_editText = ruled_editText;
     }
 
+    public void verify()
+    {
+        for (ruled_EditText editText: this.ruled_editText) {
 
-    public verify_input_data(EditText input_text,EditText input_text2) {
-        super();
-        if( input_text.getText().toString().length() == 0 )
-        {
-            input_text.setError( "First name is required!" );
+            if(editText.min_lenght != null)
+            {
+                if(editText.CurrentEditText.length()<editText.min_lenght)
+                {
+                    editText.CurrentEditText.setError( "El numero de caracteres del texto no debe ser menor de "+editText.min_lenght);
+                }
+            }
+            if(editText.max_lenght!= null)
+            {
+                if(editText.CurrentEditText.length()>editText.max_lenght)
+                {
+                    editText.CurrentEditText.setError("El numero de caracteres del texto no debe ser mayor de "+editText.max_lenght);
+                }
+            }
+            if(editText.pattern != null)
+            {
+                if(!editText.CurrentEditText.getText().toString().matches(editText.pattern))
+                {
+                    editText.CurrentEditText.setError( "El texto viene en un formato no requerido" );
+                }
+            }
+
         }
-
     }
 }
