@@ -3,6 +3,8 @@ package core.Actions;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import core.Objects.ruled_EditText;
 
@@ -23,6 +25,7 @@ public class verify_input_data extends Actions {
 
     public void verify()
     {
+
         for (ruled_EditText editText: this.ruled_editText) {
 
             if(editText.min_lenght != null)
@@ -41,9 +44,23 @@ public class verify_input_data extends Actions {
             }
             if(editText.pattern != null)
             {
-                if(!editText.CurrentEditText.getText().toString().matches(editText.pattern))
+                /*if(editText.CurrentEditText.getText().toString().matches(editText.pattern))
                 {
                     editText.CurrentEditText.setError( "El texto viene en un formato no requerido" );
+                }*/
+                //System.out.println("verficar pattern");
+                Pattern p = Pattern.compile(editText.pattern);
+                String editstring = editText.CurrentEditText.getText().toString();
+                System.out.println("verficar pattern "+editText.pattern+" "+editstring);
+                Matcher m = p.matcher(editstring);
+                if (m.find())
+                {
+                    System.out.println("patron  encontrado");
+                }
+                else
+                {
+                    editText.CurrentEditText.setError( "El texto viene en un formato no requerido" );
+                    System.out.println("patron no encontrado");
                 }
             }
 
