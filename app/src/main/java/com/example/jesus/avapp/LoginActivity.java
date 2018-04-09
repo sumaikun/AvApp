@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +23,7 @@ import core.Invokers.ICommand;
 import core.Invokers.Invoking_command;
 import core.Invokers.current_command;
 import core.Objects.ruled_EditText;
-import core.WebServices.getData;
+import core.WebServices.http_operations;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private static EditText password;
     private static TextView attempts;
     private static Button login_btn;
-    //private getData ws = new getData();
+    private http_operations ws = new http_operations();
     protected int attemp_counter = 5;
     protected ArrayList<ruled_EditText> ruled_editText = new ArrayList<ruled_EditText>();
     protected Invoking_command invoking_vi = new Invoking_command();
@@ -74,21 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void login() throws IOException {
         //System.out.println("Hacer login");
-        Log.d("proceso","Hacer login");
-        String response = null;
-        try {
-            response = new getData().execute("http://avapp.seguridadycitofonos.com/index.php?controller=WebService&action=test").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JSONObject obj = new JSONObject(response);
-            Log.d("JsonGotit",obj.getString("message"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String response = ws.test();
+        Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
     }
 }
