@@ -12,18 +12,18 @@ import core.Actions.verify_input_data;
 public class current_command implements ICommand {
     private String description;
     private Object object;
-    private String smethod;
+    private String method;
 
     public current_command(String description , Object ob, String smethod)
     {
         this.description = description;
         this.object = ob;
-        this.smethod = smethod;
+        this.method = smethod;
     }
 
     @Override
     public void Execute() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = object.getClass().getMethod(this.smethod, null);
+        Method method = object.getClass().getMethod(this.method, null);
         method.invoke(object, null);
     }
 }

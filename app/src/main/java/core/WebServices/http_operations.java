@@ -1,7 +1,5 @@
 package core.WebServices;
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,7 +11,7 @@ public class http_operations {
     {
         String response = null;
         try {
-            response = new getData().execute("http://avapp.seguridadycitofonos.com/index.php?controller=WebService&action=test").get();
+            response = new RequestDispatcher().execute("http://avapp.seguridadycitofonos.com/index.php?controller=WebService&action=test").get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -29,5 +27,10 @@ public class http_operations {
         }
 
         return null;
+    }
+
+    public String Login()
+    {
+        return "";
     }
 }

@@ -16,9 +16,24 @@ import java.net.URL;
  * Created by Jesus on 21/03/2018.
  */
 
-public class getData extends AsyncTask<String, String, String> {
+public class RequestDispatcher extends AsyncTask<String, String, String> {
 
         HttpURLConnection urlConnection;
+        private String RequestMethod = "GET";
+        private int ConnectTimeout = 15000;
+        private int ReadTimeout = 10000;
+
+        public RequestDispatcher(String RequestMethod)
+        {
+            this.RequestMethod = RequestMethod;
+        }
+
+        public RequestDispatcher(String RequestMethod, int ConnectTimeout, int ReadTimeout)
+        {
+            this.RequestMethod = RequestMethod;
+            this.ConnectTimeout = ConnectTimeout;
+            this.ReadTimeout = ReadTimeout;
+        }
 
         @Override
         public String doInBackground(String... args) {
@@ -28,6 +43,8 @@ public class getData extends AsyncTask<String, String, String> {
             try {
                 URL url = new URL(args[0]);
                 urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setReadTimeout(this.ReadTimeout);
+                urlConnection.setReadTimeout(this.ReadTimeout);
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
