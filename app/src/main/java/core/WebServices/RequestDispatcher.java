@@ -29,6 +29,7 @@ public class RequestDispatcher extends AsyncTask<String, String, String> {
         private String RequestMethod = "GET";
         private int ConnectTimeout = 15000;
         private int ReadTimeout = 10000;
+        private HashMap<String, String> params;
 
         public RequestDispatcher(){};
 
@@ -44,7 +45,11 @@ public class RequestDispatcher extends AsyncTask<String, String, String> {
             this.ReadTimeout = ReadTimeout;
         }
 
-        @Override
+        public void setParams(HashMap<String, String> params) {
+            this.params = params;
+        }
+
+    @Override
         public String doInBackground(String... args) {
 
             StringBuilder result = new StringBuilder();
@@ -54,14 +59,46 @@ public class RequestDispatcher extends AsyncTask<String, String, String> {
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setConnectTimeout(this.ConnectTimeout);
                 urlConnection.setReadTimeout(this.ReadTimeout);
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                urlConnection.setDoInput(true);
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    result.append(line);
+                if(this.RequestMethod.toUpperCase().equals("GET"))
+                {
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
                 }
+
+                if(this.RequestMethod.toUpperCase().equals("POST"))
+                {
+                    urlConnection.setDoOutput(true);
+                    OutputStream os = urlConnection.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(getPostDataString(this.params));
+
+                    writer.flush();
+                    writer.close();
+                    os.close();
+                    int responseCode=urlConnection.getResponseCode();
+
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        String line;
+                        BufferedReader br=new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                        while ((line=br.readLine()) != null) {
+                            result.append(line);
+                        }
+                    }
+
+                }
+
+
+
 
             }catch( Exception e) {
                 e.printStackTrace();
@@ -70,8 +107,7 @@ public class RequestDispatcher extends AsyncTask<String, String, String> {
                 urlConnection.disconnect();
             }
 
-            //System.out.println("response "+result.toString());
-            //Log.d("response",result.toString());
+
             return result.toString();
         }
 
@@ -81,6 +117,8 @@ public class RequestDispatcher extends AsyncTask<String, String, String> {
             //Do something with the JSON string
 
         }
+
+
 
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
@@ -99,49 +137,6 @@ public class RequestDispatcher extends AsyncTask<String, String, String> {
         return result.toString();
     }
 
-    public String  performPostCall(String requestURL,
-                                   HashMap<String, String> postDataParams) {
-
-        URL url;
-        String response = "";
-        try {
-            url = new URL(requestURL);
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode=conn.getResponseCode();
-
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                String line;
-                BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while ((line=br.readLine()) != null) {
-                    response+=line;
-                }
-            }
-            else {
-                response="";
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return response;
-    }
 
 
 }

@@ -3,6 +3,7 @@ package core.WebServices;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 public class http_operations {
@@ -11,6 +12,7 @@ public class http_operations {
     {
         String response = null;
         try {
+
             response = new RequestDispatcher().execute("http://avapp.seguridadycitofonos.com/index.php?controller=WebService&action=test").get();
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -22,8 +22,12 @@ public class current_command implements ICommand {
     }
 
     @Override
-    public void Execute() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public <T> T  Execute() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = object.getClass().getMethod(this.method, null);
-        method.invoke(object, null);
+        System.out.println("Tipo de retorno "+method.getReturnType());
+        Object process = method.invoke(object, null);
+        return (T) process;
     }
+
+
 }

@@ -6,5 +6,5 @@ package core.Invokers;
 
 public interface IInvoker {
         void SetCommand(ICommand command);
-        void Invoke();
+        <T> T  Invoke();
 }

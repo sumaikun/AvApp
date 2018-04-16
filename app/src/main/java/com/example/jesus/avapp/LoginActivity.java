@@ -15,7 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import core.Actions.verify_input_data;
@@ -30,41 +32,45 @@ public class LoginActivity extends AppCompatActivity {
     private static EditText username;
     private static EditText password;
     private static TextView attempts;
+    public String test;
     private static Button login_btn;
-    private http_operations ws = new http_operations();
     protected int attemp_counter = 5;
-    protected ArrayList<ruled_EditText> ruled_editText = new ArrayList<ruled_EditText>();
-    protected Invoking_command invoking_vi = new Invoking_command();
+    private LoginConcrete loginConcrete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        this.test = "prueba de metodo V2";
         setContentView(R.layout.activity_login);
         login_btn = findViewById(R.id.login_button);
         username = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        login_btn.setOnClickListener(new LoginActivity.make_login());
 
-        ruled_EditText current_text = new ruled_EditText(username, 15, 7, null);
-        this.ruled_editText.add(current_text);
+        try {
+            loginConcrete = new LoginConcrete(this);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
 
-        current_text = new ruled_EditText(password, 8, 8, null);
-        this.ruled_editText.add(current_text);
-
-        login_btn.setOnClickListener(new make_login());
-
-        final verify_input_data verify_input_data = new verify_input_data(ruled_editText);
-
-        final ICommand current_command =  new current_command("verificar datos de entrada",verify_input_data,"verify");
-
-        invoking_vi.SetCommand(current_command);
     }
 
     private class make_login implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            invoking_vi.Invoke();
+
+            /*if(invoking_vi.Invoke())
+            {
+                try {
+                    login();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }*/
             try {
                 login();
             } catch (IOException e) {
@@ -74,8 +80,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     protected void login() throws IOException {
-        //System.out.println("Hacer login");
-        String response = ws.test();
-        Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
+        System.out.println("Hacer login");
+       // String response = ws.test();
+        //Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
+    }
+
+    public String getTest()
+    {
+        return this.test;
     }
 }

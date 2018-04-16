@@ -23,7 +23,7 @@ public class verify_input_data extends Actions {
         this.ruled_editText = ruled_editText;
     }
 
-    public void verify()
+    public boolean verify()
     {
 
         for (ruled_EditText editText: this.ruled_editText) {
@@ -33,13 +33,16 @@ public class verify_input_data extends Actions {
                 if(editText.CurrentEditText.length()<editText.min_lenght)
                 {
                     editText.CurrentEditText.setError( "El numero de caracteres del texto no debe ser menor de "+editText.min_lenght);
+                    return false;
                 }
+
             }
             if(editText.max_lenght!= null)
             {
                 if(editText.CurrentEditText.length()>editText.max_lenght)
                 {
                     editText.CurrentEditText.setError("El numero de caracteres del texto no debe ser mayor de "+editText.max_lenght);
+                    return false;
                 }
             }
             if(editText.pattern != null)
@@ -63,7 +66,7 @@ public class verify_input_data extends Actions {
                     System.out.println("patron no encontrado");
                 }
             }
-
         }
+        return true;
     }
 }

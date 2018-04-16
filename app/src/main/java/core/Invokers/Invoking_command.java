@@ -15,9 +15,9 @@ public class Invoking_command implements  IInvoker {
     }
 
     @Override
-    public void Invoke() {
+    public <T> T  Invoke() {
         try {
-            this.currentCommand.Execute();
+           return  this.currentCommand.Execute();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -25,6 +25,7 @@ public class Invoking_command implements  IInvoker {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 

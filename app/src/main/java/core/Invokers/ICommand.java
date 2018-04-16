@@ -7,5 +7,6 @@ import java.lang.reflect.InvocationTargetException;
  */
 
 public interface ICommand {
-        void Execute() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+        <T> T  Execute() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+
 }
