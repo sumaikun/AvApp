@@ -29,9 +29,9 @@ import core.WebServices.http_operations;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static EditText username;
-    private static EditText password;
-    private static TextView attempts;
+    public  EditText username;
+    public  EditText password;
+    public  TextView attempts;
     public String test;
     private static Button login_btn;
     protected int attemp_counter = 5;
@@ -49,38 +49,38 @@ public class LoginActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new LoginActivity.make_login());
 
         try {
-            loginConcrete = new LoginConcrete(this);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            this.concrete_initializer();
         } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 
+
+    }
+
+    private void concrete_initializer() throws NoSuchFieldException, IllegalAccessException {
+        System.out.println("Vamos a iniciar clase concreta");
+        this.loginConcrete = new LoginConcrete(this);
+        System.out.println("Clase concreta iniciada");
     }
 
     private class make_login implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-
-            /*if(invoking_vi.Invoke())
-            {
                 try {
                     login();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }*/
-            try {
-                login();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     protected void login() throws IOException {
-        System.out.println("Hacer login");
+        if(this.loginConcrete.current_command("login_test_validation")) {
+            System.out.println("Hacer login");
+        }
        // String response = ws.test();
         //Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
     }
