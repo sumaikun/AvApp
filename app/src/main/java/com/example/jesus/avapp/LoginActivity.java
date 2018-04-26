@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     public  EditText username;
     public  EditText password;
     public  TextView attempts;
-    public String test;
     private static Button login_btn;
     protected int attemp_counter = 5;
     private LoginConcrete loginConcrete;
@@ -41,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        this.test = "prueba de metodo V2";
         setContentView(R.layout.activity_login);
         login_btn = findViewById(R.id.login_button);
         username = findViewById(R.id.email);
@@ -78,15 +76,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     protected void login() throws IOException {
-        if(this.loginConcrete.current_command("login_test_validation")) {
+        if(this.loginConcrete.current_command("login_validation")) {
             System.out.println("Hacer login");
+            this.loginConcrete.current_command("test_webservice");
         }
        // String response = ws.test();
         //Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
     }
 
-    public String getTest()
-    {
-        return this.test;
-    }
+
 }
