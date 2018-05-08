@@ -42,7 +42,7 @@ public class LoginConcrete {
 
         Object username = this.var_by_fields("username");
 
-        ruled_EditText current_text = new ruled_EditText((EditText) username, 15, 7, null);
+        ruled_EditText current_text = new ruled_EditText((EditText) username, 25, 7, null);
         this.ruled_editText.add(current_text);
 
         Object password = this.var_by_fields("password");
@@ -63,6 +63,19 @@ public class LoginConcrete {
         this.services = new LoginServices(this.ObjectClass);
         ICommand test_webservice =  new current_command("test webservice", this.services,"test_webservice");
         this.commandList.put("test_webservice",test_webservice);
+    }
+
+    private void login() throws NoSuchFieldException, IllegalAccessException {
+
+        EditText username = (EditText) this.var_by_fields("username");
+        EditText password = (EditText) this.var_by_fields("password");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username",username.getText().toString());
+        params.put("password",password.getText().toString());
+        this.services = new LoginServices(this.ObjectClass);
+        this.services.SetParams(params);
+        ICommand login_system =  new current_command("make login", this.services,"login_system");
+        this.commandList.put("login_system",login_system);
     }
 
     private Object var_by_fields(String varname) throws IllegalAccessException, NoSuchFieldException  {

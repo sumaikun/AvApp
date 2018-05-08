@@ -58,9 +58,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void concrete_initializer() throws NoSuchFieldException, IllegalAccessException {
-        System.out.println("Vamos a iniciar clase concreta");
+        //System.out.println("Vamos a iniciar clase concreta");
         this.loginConcrete = new LoginConcrete(this);
-        System.out.println("Clase concreta iniciada");
+        //System.out.println("Clase concreta iniciada");
     }
 
     private class make_login implements View.OnClickListener {
@@ -77,8 +77,8 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void login() throws IOException {
         if(this.loginConcrete.current_command("login_validation")) {
-            System.out.println("Hacer login");
-            this.loginConcrete.current_command("test_webservice");
+            //System.out.println("Hacer login");
+            this.loginConcrete.current_command("login_system");
         }
        // String response = ws.test();
         //Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
