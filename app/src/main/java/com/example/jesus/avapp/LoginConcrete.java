@@ -36,6 +36,7 @@ public class LoginConcrete {
     private void methods() throws NoSuchFieldException, IllegalAccessException {
         login_validation();
         test_webservice();
+        login();
     }
 
     private void login_validation() throws NoSuchFieldException, IllegalAccessException {
@@ -69,12 +70,14 @@ public class LoginConcrete {
 
         EditText username = (EditText) this.var_by_fields("username");
         EditText password = (EditText) this.var_by_fields("password");
-        HashMap<String, String> params = new HashMap<>();
-        params.put("username",username.getText().toString());
-        params.put("password",password.getText().toString());
+        HashMap<String, EditText> params = new HashMap<>();
+        params.put("username",username);
+        params.put("password",password);
         this.services = new LoginServices(this.ObjectClass);
         this.services.SetParams(params);
-        ICommand login_system =  new current_command("make login", this.services,"login_system");
+
+
+        ICommand login_system =  new current_command("make login", this.services,"login");
         this.commandList.put("login_system",login_system);
     }
 

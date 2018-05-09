@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void login() throws IOException {
         if(this.loginConcrete.current_command("login_validation")) {
-            //System.out.println("Hacer login");
+            System.out.println("Hacer login");
             this.loginConcrete.current_command("login_system");
         }
        // String response = ws.test();
