@@ -54,9 +54,13 @@ public class http_operations {
         }
 
         try {
+            System.out.println("verifiquemos response");
+            System.out.println(response);
+
             JSONObject obj = new JSONObject(response);
+
             return obj.getString("message");
-            // Log.d("JsonGotit",obj.getString("message"));
+          
         } catch (JSONException e) {
             e.printStackTrace();
         }
