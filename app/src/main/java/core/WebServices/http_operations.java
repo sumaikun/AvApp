@@ -38,7 +38,7 @@ public class http_operations {
         return null;
     }
 
-    public String Login(HashMap<String, String> params)
+    public JSONObject Login(HashMap<String, String> params)
     {
         RequestDispatcher dispatcher = new RequestDispatcher("POST");
         dispatcher.setParams(params);
@@ -59,12 +59,15 @@ public class http_operations {
 
             JSONObject obj = new JSONObject(response);
 
-            return obj.getString("message");
+            //return obj.getString("message");
+
+            return obj;
           
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
 
-        return null;
+
     }
 }

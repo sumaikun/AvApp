@@ -43,12 +43,12 @@ public class LoginConcrete {
 
         Object username = this.var_by_fields("username");
 
-        ruled_EditText current_text = new ruled_EditText((EditText) username, 25, 7, null);
+        ruled_EditText current_text = new ruled_EditText((EditText) username, 25, 7, "email");
         this.ruled_editText.add(current_text);
 
         Object password = this.var_by_fields("password");
 
-        current_text = new ruled_EditText((EditText) password, 8, 8, null);
+        current_text = new ruled_EditText((EditText) password, 16, 8, null);
         this.ruled_editText.add(current_text);
 
         final verify_input_data verify_input_data = new verify_input_data(ruled_editText);

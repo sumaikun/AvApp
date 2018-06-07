@@ -3,6 +3,9 @@ import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import core.WebServices.http_operations;
@@ -29,8 +32,10 @@ public class LoginServices {
         Toast.makeText((Context) this.context,response, Toast.LENGTH_LONG).show();
     }
 
-    public void login()
-    {
+    public boolean login() throws JSONException {
+
+        String message = "";
+
         EditText username = this.params.get("username");
         EditText password = this.params.get("password");
 
@@ -40,10 +45,28 @@ public class LoginServices {
 
         login_params.put("password",password.getText().toString());
 
-        System.out.println("parametros desde concret");
-        System.out.println(login_params.toString());
+        JSONObject response = this.http.Login(login_params);
 
-        String response = this.http.Login(login_params);
-        Toast.makeText((Context) this.context,response, Toast.LENGTH_LONG).show();
+        if(response.get("status") != null)
+        {
+            if(response.getInt("status") != 1)
+            {
+                message = response.getString("message");
+                Toast.makeText((Context) this.context,message, Toast.LENGTH_LONG).show();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            message = "Ocurrio un error en la conexión al servidor";
+            Toast.makeText((Context) this.context,message, Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+
     }
 }

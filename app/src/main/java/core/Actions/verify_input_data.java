@@ -47,24 +47,34 @@ public class verify_input_data extends Actions {
             }
             if(editText.pattern != null)
             {
-                /*if(editText.CurrentEditText.getText().toString().matches(editText.pattern))
-                {
-                    editText.CurrentEditText.setError( "El texto viene en un formato no requerido" );
-                }*/
-                //System.out.println("verficar pattern");
-                Pattern p = Pattern.compile(editText.pattern);
-                String editstring = editText.CurrentEditText.getText().toString();
-                System.out.println("verficar pattern "+editText.pattern+" "+editstring);
-                Matcher m = p.matcher(editstring);
-                if (m.find())
-                {
-                    System.out.println("patron  encontrado");
+                Pattern pattern;
+                Matcher mat;
+
+                switch (editText.pattern){
+                    case "email":
+                        pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+                        mat = pattern.matcher(editText.CurrentEditText.getText().toString());
+                        if(mat.matches()){
+                            System.out.println("Valid email address");
+                        }else{
+                            editText.CurrentEditText.setError("No es un correo electronico valido");
+                            return false;
+                        }
+                        break;
+                    case "numbers":
+                        pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+                        mat = pattern.matcher(editText.CurrentEditText.getText().toString());
+                        if(mat.matches()){
+                            System.out.println("Valid number");
+                        }else{
+                            editText.CurrentEditText.setError("El valor ingresado no es un numero");
+                            return false;
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    editText.CurrentEditText.setError( "El texto viene en un formato no requerido" );
-                    System.out.println("patron no encontrado");
-                }
+
             }
         }
         return true;
