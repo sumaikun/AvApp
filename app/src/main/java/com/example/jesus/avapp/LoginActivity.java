@@ -1,6 +1,7 @@
 package com.example.jesus.avapp;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -80,7 +81,9 @@ public class LoginActivity extends AppCompatActivity {
             //System.out.println("Hacer login");
             if(this.loginConcrete.current_command("login_system"))
             {
-
+                Intent intent;
+                intent = new Intent(LoginActivity.this, AppNavigation.class);
+                startActivity(intent);
             }
         }
        // String response = ws.test();
