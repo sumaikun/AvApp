@@ -82,7 +82,8 @@ public class LoginActivity extends AppCompatActivity {
             if(this.loginConcrete.current_command("login_system"))
             {
                 Intent intent;
-                intent = new Intent(LoginActivity.this, AppNavigation.class);
+                //intent = new Intent(LoginActivity.this, AppNavigation.class);
+                intent = new Intent(LoginActivity.this, CallActivity.class);
                 startActivity(intent);
             }
         }
