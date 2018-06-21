@@ -25,6 +25,7 @@ import core.Actions.verify_input_data;
 import core.Invokers.ICommand;
 import core.Invokers.Invoking_command;
 import core.Invokers.current_command;
+import core.Objects.KeyValueDB;
 import core.Objects.ruled_EditText;
 import core.WebServices.http_operations;
 
@@ -81,9 +82,13 @@ public class LoginActivity extends AppCompatActivity {
             //System.out.println("Hacer login");
             if(this.loginConcrete.current_command("login_system"))
             {
+                String peer = KeyValueDB.getStringProperty(this,"peer");
+                System.out.println("valor del peer "+peer);
+
                 Intent intent;
                 //intent = new Intent(LoginActivity.this, AppNavigation.class);
                 intent = new Intent(LoginActivity.this, CallActivity.class);
+                //intent.putExtra("peer",1);
                 startActivity(intent);
             }
         }

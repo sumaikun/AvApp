@@ -2,6 +2,8 @@ package com.example.jesus.avapp;
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
+import core.Objects.KeyValueDB;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +59,7 @@ public class LoginServices {
             }
             else
             {
+                KeyValueDB.setProperty((Context) this.context, "peer", response.getString("apto"));
                 return true;
             }
         }

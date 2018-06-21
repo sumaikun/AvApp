@@ -1,14 +1,21 @@
 package com.example.jesus.avapp;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import core.Objects.KeyValueDB;
+
 import com.sinch.android.rtc.Sinch;
 import com.sinch.android.rtc.SinchClient;
 
 public class CallActivity extends AppCompatActivity {
+
+    String peer = KeyValueDB.getStringProperty(this,"peer");
+
+
 
     SinchClient sinchClient = Sinch.getSinchClientBuilder()
             .context(this)

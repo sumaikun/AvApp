@@ -12,28 +12,26 @@ import core.Actions.verify_input_data;
 import core.Invokers.ICommand;
 import core.Invokers.Invoking_command;
 import core.Invokers.current_command;
+import core.Objects.ConcreteImplementator;
 import core.Objects.ruled_EditText;
 
 
-public class LoginConcrete {
+public class LoginConcrete extends ConcreteImplementator{
 
-    private final Object ObjectClass;
+
 
     private LoginServices services;
-    private HashMap<String,ICommand> commandList = new HashMap<String,ICommand>();
-    protected Invoking_command invoking = new Invoking_command();
     private ArrayList<ruled_EditText> ruled_editText = new ArrayList<ruled_EditText>();
 
 
 
     public LoginConcrete(Object object) throws NoSuchFieldException, IllegalAccessException {
-        this.ObjectClass =  object;
-        this.methods();
-
+        super(object);
     }
     //Implementaciones concretas
 
-    private void methods() throws NoSuchFieldException, IllegalAccessException {
+    @Override
+    public void methods() throws NoSuchFieldException, IllegalAccessException {
         login_validation();
         test_webservice();
         login();
@@ -59,13 +57,6 @@ public class LoginConcrete {
 
     }
 
-    private void test_webservice()
-    {
-        this.services = new LoginServices(this.ObjectClass);
-        ICommand test_webservice =  new current_command("test webservice", this.services,"test_webservice");
-        this.commandList.put("test_webservice",test_webservice);
-    }
-
     private void login() throws NoSuchFieldException, IllegalAccessException {
 
         EditText username = (EditText) this.var_by_fields("username");
@@ -81,36 +72,12 @@ public class LoginConcrete {
         this.commandList.put("login_system",login_system);
     }
 
-    private Object var_by_fields(String varname) throws IllegalAccessException, NoSuchFieldException  {
-        Field[] fields = this.ObjectClass.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            //System.out.println(field.getName());
-            if(field.getName().equals(varname))
-            {
-                Field cfield = this.ObjectClass.getClass().getDeclaredField(varname);
-                cfield.setAccessible(true);
-                Object value = field.get(this.ObjectClass);
-                return value;
-                //System.out.println("value of the object "+value.toString());
-            }
-        }
-        return null;
-    }
-
-    public <T> T current_command(String key)
+    private void test_webservice()
     {
-        Object result;
-        //System.out.println(this.commandList.toString());
-        ICommand current_command = this.commandList.get(key);
-        if(current_command == null)
-        {
-            result = false;
-            System.out.println("Comando nulo "+key);
-            return (T) result;
-        }
-
-        this.invoking.SetCommand(current_command);
-        result = this.invoking.Invoke();
-        return (T) result;
+        this.services = new LoginServices(this.ObjectClass);
+        ICommand test_webservice =  new current_command("test webservice", this.services,"test_webservice");
+        this.commandList.put("test_webservice",test_webservice);
     }
+
+
 }
